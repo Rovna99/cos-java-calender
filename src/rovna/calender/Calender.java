@@ -20,15 +20,23 @@ public class Calender {
 	}
 	
 	public static void main(String[] args) {
+		
+		
+		String PROMPT = "cal>";
 		Scanner scanner = new Scanner ( System.in);
 		Calender cal = new Calender();
 		
 		System.out.println("반복횟수를 입력하세요 :");
-		int repeat = scanner.nextInt();
 		
-		for (int i = 0; i < repeat; i++ ) {
+		int Month = 1;
+		
+		while(true) {
 			System.out.println("월을 입력하세요 :");
-			int Month = scanner.nextInt();
+			System.out.println(PROMPT);
+			Month = scanner.nextInt();
+			if (Month == -1) {
+				break;
+			}
 			if (Month > 0 && Month < 13){
 				System.out.printf("%d월은 %d일까지 있습니다.\n", Month, cal.getMaxDaysOfMonth(Month));
 				
