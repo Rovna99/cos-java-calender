@@ -20,18 +20,23 @@ public class Calender {
 	}
 	
 	public static void main(String[] args) {
-		
-		//숫자를 입력받아 해당하는 달의 최대 일수를 출력하는 프로그램
-		System.out.println("달을 입력하세요 :");
 		Scanner scanner = new Scanner ( System.in);
 		Calender cal = new Calender();
-		int Month = scanner.nextInt();
-		if (Month > 0 && Month < 13){
-			System.out.printf("%d월은 %d일까지 있습니다.", Month, cal.getMaxDaysOfMonth(Month));
-			scanner.close();
-		} else {
-			System.out.println("잘못된 입력입니다.");
-		};
 		
+		System.out.println("반복횟수를 입력하세요 :");
+		int repeat = scanner.nextInt();
+		
+		for (int i = 0; i < repeat; i++ ) {
+			System.out.println("월을 입력하세요 :");
+			int Month = scanner.nextInt();
+			if (Month > 0 && Month < 13){
+				System.out.printf("%d월은 %d일까지 있습니다.\n", Month, cal.getMaxDaysOfMonth(Month));
+				
+			} else {
+				System.out.println("잘못된 입력입니다.");
+			}
+		}
+		System.out.println("Bye~");
+		scanner.close();
 	}
 }
