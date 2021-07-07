@@ -5,9 +5,21 @@ import java.util.Scanner;
 public class Calender {
 	
 	private static final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	private static final int[] LEAP_MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	
-	public int getMaxDaysOfMonth(int Month) {
+	public boolean isLeapYear(int year) {
+		if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
+			return true;
+		else
+			return false;
+	}
+	
+	public int getMaxDaysOfMonth(int year, int Month) {
+		if (isLeapYear(year)) {
+			return LEAP_MAX_DAYS[Month -1];
+		} else {
 		return MAX_DAYS[Month - 1];
+		}
 	}
 	
 	public void printCalendar(int year, int Month) {
@@ -15,7 +27,8 @@ public class Calender {
 		System.out.println("\n SU MO TU WE TH FR SA");
 		System.out.println("---------------------");
 		
-		int maxDay = getMaxDaysOfMonth(Month);
+		
+		int maxDay = getMaxDaysOfMonth(year , Month);
 		
 		for(int i=1; i <= maxDay; i++) {
 			System.out.printf("%3d",i);
@@ -38,6 +51,7 @@ public class Calender {
 		Calender cal = new Calender();
 		
 		int Month = 1;
+		int year = 2021;
 		
 		while(true) {
 			System.out.println("월을 입력하세요");
@@ -57,7 +71,7 @@ public class Calender {
 //				cal.printCalendar(0, Month);
 //			}
 			if (Month > 0 && Month < 13){
-			System.out.printf("%d월은 %d일까지 있습니다.\n", Month, cal.getMaxDaysOfMonth(Month));
+			System.out.printf("%d월은 %d일까지 있습니다.\n", Month, cal.getMaxDaysOfMonth(year,Month));
 				
 			} else {
 				System.out.println("잘못된 입력입니다.");
