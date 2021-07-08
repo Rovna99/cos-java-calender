@@ -4,8 +4,8 @@ package rovna.calender;
 
 public class Calender {
 	
-	private static final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-	private static final int[] LEAP_MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	private static final int[] MAX_DAYS = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	private static final int[] LEAP_MAX_DAYS = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	
 	public boolean isLeapYear(int year) {
 		if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
@@ -14,26 +14,27 @@ public class Calender {
 			return false;
 	}
 	
-	public int getMaxDaysOfMonth(int year, int Month, int weekday) {
+	public int getMaxDaysOfMonth(int year, int Month) {
 		
 			if (isLeapYear(year)) {
-				return LEAP_MAX_DAYS[Month -1];
+				return LEAP_MAX_DAYS[Month];
 				
 			} else {
-			return MAX_DAYS[Month - 1];
+			return MAX_DAYS[Month];
 			}
 	}
 	
-	public void printCalendar(int year, int Month, int weekday) {
-		System.out.printf("   <<%4d년%3d월>>",year, Month);
+	public void printCalendar(int year, int Month) {
+		System.out.printf("   <<%d년 %d월>>",year, Month);
 		System.out.println("\n SU MO TU WE TH FR SA");
 		System.out.println("---------------------");
 		
+		int weekday= getWeekDay(year, Month, 1 );
 		//print blank space
 		for (int i = 0; i < weekday; i++) {
 			System.out.print("   ");
 		}
-		int maxDay = getMaxDaysOfMonth(year , Month, weekday);
+		int maxDay = getMaxDaysOfMonth(year , Month);
 		int count = 7 - weekday;
 		int delim = (count < 7) ? count : 0;
 		
@@ -53,4 +54,27 @@ public class Calender {
 		System.out.println();
 		System.out.println();
 	}
+	
+	private int getWeekDay(int year, int Month, int day) {
+		int syear = 1970;
+		final int STANDARD_WEEKDAY = 3; // 1970,Jan,1st = Thursday 
+		
+		int count = 0;
+		
+		for ( int i = syear; i < year; i++) {
+			int delta =  isLeapYear(i) ? 366 : 365;
+			count += delta;
+		}
+		
+		for (int i = 0; i < Month; i++) {
+			int delta = getMaxDaysOfMonth(year, i);
+			count += delta;
+		}
+		
+		count += day;
+		
+		int weekday = (count + STANDARD_WEEKDAY) % 7;
+		return weekday;
+	}
+	
 }
